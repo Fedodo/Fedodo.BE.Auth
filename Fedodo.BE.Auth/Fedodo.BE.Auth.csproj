@@ -8,6 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="LNA-DEV.CommonExtensions" Version="1.2.11" />
+        <PackageReference Include="OpenIddict" Version="4.1.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
