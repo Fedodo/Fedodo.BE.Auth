@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Fedodo.BE.Auth.Model.DTO;
+namespace Fedodo.BE.Auth.Models.DTO;
 
 public class ReturnApplicationDto
 {

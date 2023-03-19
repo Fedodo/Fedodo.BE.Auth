@@ -1,6 +1,6 @@
 using System.Security.Cryptography;
 using CommonExtensions;
-using Fedodo.BE.Auth.Model.DTO;
+using Fedodo.BE.Auth.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using OpenIddict.Abstractions;
 
