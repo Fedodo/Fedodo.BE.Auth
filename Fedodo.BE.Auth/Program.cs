@@ -9,8 +9,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwagger(c => c.RouteTemplate = "auth/swagger/{documentname}/swagger.json");
+app.UseSwaggerUI(c => c.RoutePrefix = "auth/swagger");
 
 app.UseAuthorization();
 
