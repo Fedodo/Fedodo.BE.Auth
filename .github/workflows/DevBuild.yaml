@@ -4,6 +4,7 @@ name: Docker DEV Image CI
 on:
   push:
     branches: [ dev ]
+  workflow_dispatch:
 
 env:
   DOCKERHUB_USERNAME: "fedodo"
