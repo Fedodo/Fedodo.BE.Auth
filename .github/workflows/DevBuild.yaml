@@ -2,9 +2,10 @@
 name: Docker DEV Image CI
 
 on:
+  workflow_dispatch:
+  
   push:
     branches: [ dev ]
-  workflow_dispatch:
 
 env:
   DOCKERHUB_USERNAME: "fedodo"
