@@ -7,7 +7,7 @@ on:
 
 env:
   DOCKERHUB_USERNAME: "fedodo"
-  PROJECT_PATH: "Fedodo.BE.Auth/Fedodo.BE.Auth.Test.csproj"
+  PROJECT_PATH: "Fedodo.BE.Auth.Test/Fedodo.BE.Auth.Test.csproj"
 
 jobs:
 
