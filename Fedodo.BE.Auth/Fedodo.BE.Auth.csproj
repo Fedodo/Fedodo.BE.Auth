@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="wwwroot\css\site.css" />
+      <Content Update="wwwroot\css\site.css" />
     </ItemGroup>
 
 </Project>
