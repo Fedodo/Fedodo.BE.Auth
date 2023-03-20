@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git", "Git", "{181ACF62-60A
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedodo.BE.Auth.Test", "Fedodo.BE.Auth.Test\Fedodo.BE.Auth.Test.csproj", "{88F06A54-AD86-4AEE-A653-F703DB9E4886}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,5 +19,9 @@ Global
 		{5D4E1A95-2538-42B8-8D7E-66652F0D9422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D4E1A95-2538-42B8-8D7E-66652F0D9422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D4E1A95-2538-42B8-8D7E-66652F0D9422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88F06A54-AD86-4AEE-A653-F703DB9E4886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F06A54-AD86-4AEE-A653-F703DB9E4886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F06A54-AD86-4AEE-A653-F703DB9E4886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F06A54-AD86-4AEE-A653-F703DB9E4886}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
