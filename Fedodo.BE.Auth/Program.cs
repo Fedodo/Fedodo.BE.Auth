@@ -1,19 +1,54 @@
+using Fedodo.BE.Auth;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using MongoDB.Driver;
+
+var startup = new Startup();
+var connectionString =
+    $"mongodb+srv://{Environment.GetEnvironmentVariable("MONGO_USERNAME")}:{Environment.GetEnvironmentVariable("MONGO_PASSWORD")}@{Environment.GetEnvironmentVariable("MONGO_HOSTNAME")}/?retryWrites=true&w=majority";
+var mongoClient = new MongoClient(connectionString);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options => { options.LoginPath = "/account/login"; });
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+startup.AddOpenIdDict(builder, mongoClient);
+
+await startup.CreateMongoDbIndexes(builder);
+
+startup.SetupMongoDb();
+
+startup.AddCustomServices(builder, mongoClient);
+
+builder.WebHost.UseUrls("http://*:");
 
 var app = builder.Build();
 
 app.UseSwagger(c => c.RouteTemplate = "auth/swagger/{documentname}/swagger.json");
 app.UseSwaggerUI(c => c.RoutePrefix = "auth/swagger");
 
-app.UseAuthorization();
+app.UseCors(x => x.AllowAnyHeader()
+    .AllowAnyMethod()
+    .WithOrigins("*"));
 
-app.MapControllers();
+app.UseStaticFiles();
+
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseEndpoints(options =>
+{
+    options.MapRazorPages();
+    options.MapControllers();
+    options.MapFallbackToFile("index.html");
+});
 
 app.Run();
