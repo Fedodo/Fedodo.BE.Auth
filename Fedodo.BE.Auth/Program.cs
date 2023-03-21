@@ -1,3 +1,5 @@
+// https://dev.to/robinvanderknaap/setting-up-an-authorization-server-with-openiddict-part-i-introduction-4jid
+
 using Fedodo.BE.Auth;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MongoDB.Driver;
