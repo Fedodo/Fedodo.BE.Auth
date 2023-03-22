@@ -34,8 +34,8 @@ builder.WebHost.UseUrls("http://*:");
 
 var app = builder.Build();
 
-app.UseSwagger(c => c.RouteTemplate = "auth/swagger/{documentname}/swagger.json");
-app.UseSwaggerUI(c => c.RoutePrefix = "auth/swagger");
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors(x => x.AllowAnyHeader()
     .AllowAnyMethod()
