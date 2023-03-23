@@ -1,5 +1,5 @@
 
-name: Docker DEV Image CI
+name: Docker DEV Image
 
 on:
   workflow_dispatch: 
