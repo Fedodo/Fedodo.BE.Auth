@@ -6,7 +6,7 @@
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![wakatime](https://wakatime.com/badge/github/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge&logo=appveyor)](https://wakatime.com/badge/github/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge&logo=appveyor)
-[![HugoBuildAndDeploy](https://img.shields.io/github/workflow/status/Fedodo/Fedodo.BE.Auth/DockerImageCI?style=for-the-badge)](https://github.com/Fedodo/Fedodo.BE.Auth/actions/workflows/Build.yaml)
+[![HugoBuildAndDeploy](https://img.shields.io/github/actions/workflow/status/Fedodo/Fedodo.BE.Auth/Build.yaml?style=for-the-badge)](https://github.com/Fedodo/Fedodo.BE.Auth/actions/workflows/Build.yaml)
 
 <!-- PROJECT LOGO -->
 <br />
