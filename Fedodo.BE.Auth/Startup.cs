@@ -35,6 +35,8 @@ public class Startup
                 options.AddEncryptionKey(new RsaSecurityKey(encryptionCert));
                 options.AddSigningKey(new RsaSecurityKey(signingCert));
 
+                options.DisableAccessTokenEncryption(); // This should be reconsidered after a while
+                
                 options.UseAspNetCore().DisableTransportSecurityRequirement();
 
                 options.UseAspNetCore()
