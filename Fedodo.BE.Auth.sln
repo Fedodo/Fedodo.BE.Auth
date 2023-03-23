@@ -6,6 +6,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{181ACF
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		.github\workflows\DevBuild.yaml = .github\workflows\DevBuild.yaml
+		README.md = README.md
+		.github\workflows\Build.yaml = .github\workflows\Build.yaml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedodo.BE.Auth.Test", "Fedodo.BE.Auth.Test\Fedodo.BE.Auth.Test.csproj", "{88F06A54-AD86-4AEE-A653-F703DB9E4886}"
