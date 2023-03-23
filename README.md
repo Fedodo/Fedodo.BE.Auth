@@ -1,75 +1,61 @@
-<!-- VERSION: LNA-DEV-README-TEMPLATE V1.3 -->
+<!-- VERSION: Fedodo.README.Template V1.0 -->
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-
-<!-- TODO Change the links -->
-<!-- TODO Remove if you do not have a pipeline or wakatime -->
-[![wakatime](https://wakatime.com/badge/user/d37401d6-1566-41ea-b7ab-8cc7d2c9f55b/project/931d730c-4999-4084-84d0-9639c865bcce.svg?style=for-the-badge&logo=appveyor)](https://wakatime.com/badge/user/d37401d6-1566-41ea-b7ab-8cc7d2c9f55b/project/931d730c-4999-4084-84d0-9639c865bcce.svg?style=for-the-badge&logo=appveyor)
-[![HugoBuildAndDeploy](https://img.shields.io/github/workflow/status/LNA-DEV/README-TEMPLATE/PipelineName?style=for-the-badge)](https://github.com/LNA-DEV/README-TEMPLATE/actions/workflows/PipelineName.yaml)  
+[![wakatime](https://wakatime.com/badge/github/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge&logo=appveyor)](https://wakatime.com/badge/github/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge&logo=appveyor)
+[![HugoBuildAndDeploy](https://img.shields.io/github/workflow/status/Fedodo/Fedodo.BE.Auth/DockerImageCI?style=for-the-badge)](https://github.com/Fedodo/Fedodo.BE.Auth/actions/workflows/Build.yaml)
 
 <!-- PROJECT LOGO -->
-<!-- TODO Change the Link -->
-<!-- TODO Change the image -->
 <br />
 <div align="center">
-  <a href="https://github.com/lna-dev/README-TEMPLATE">
-    <img src="https://lna-dev.com/Assets/Metadata/Pingüino-Square.png" alt="Logo" width="80" height="80">
+  <a href="https://fedodo.org">
+    <img src="https://github.com/Fedodo/.github/blob/main/assets/logo%20and%20icons/Fedodo%20Circle%20Dark.png?raw=true" alt="Logo" width="200" height="200">
   </a>
 
-<!-- TODO Change the project name -->
-### README-Template
+<br>
+<br>
 
-<!-- TODO Change the description -->
-In this repository I have created a README-Template based on Best-README-Template
+### Fedodo.BE.Auth
+
+This is the Authentication-Server of the Fedodo network.
 
 <p align="center">
 
 <br />
 
-<!-- TODO Change the Link for Project, Bug and Feature -->
-<a href="https://lna-dev.com"><strong>Explore the Project »</strong></a>
+<a href="https://fedodo.org"><strong>Explore the Project »</strong></a>
 <br />
 <br />
-<a href="https://github.com/lna-dev/README-TEMPLATE/issues">Report Bug</a>
+<a href="https://github.com/Fedodo/Fedodo.BE.Auth/issues">Report Bug</a>
 ·
-<a href="https://github.com/lna-dev/README-TEMPLATE/issues">Request Feature</a>
+<a href="https://github.com/Fedodo/Fedodo.BE.Auth/issues">Request Feature</a>
   </p>
 </div>
-
-<!-- ABOUT THE PROJECT -->
-## About The Project 🗺️
-
-<!-- TODO Tell the world about your project -->
-Here you can describe your project a little bit more. Explain the world your thoughts and what your project does. Have fun and build something.
-
-<br>
 
 ## Build With 🏗️
 
 <!-- TODO Go to https://github.com/Ileriayo/markdown-badges and search for a fitting batch🙃 -->
 
+![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)  
 ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)  
-![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)  
+![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
 <br>
 
 <!-- CONTRIBUTING -->
 ## Contributing ✨
 
-<!-- TODO Customize the contributing text -->
 If you have any ideas or want to contribute yourself... go for it. I really appreciate it if some of you have cool ideas🚀
 
 <br>
 
 <!-- LICENSE -->
-<!-- TODO Add the License description -->
 ## License 📝
 
-The code is distributed under the MIT License. See `LICENSE` for more information.
+The code is distributed under the AGPL-3.0 License. See `LICENSE` for more information.
 
 <br>
 
@@ -78,19 +64,15 @@ The code is distributed under the MIT License. See `LICENSE` for more informatio
 ## Acknowledgments 🙏
 
 - [LNA-DEV README-Template](https://github.com/lna-dev/README-Template)
-- [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-- [Markdown-Badges](https://github.com/Ileriayo/markdown-badges)
 
 <!-- MARKDOWN LINKS & IMAGES -->
-<!-- TODO Update your user name -->
-<!-- TODO Update your project name -->
-[contributors-shield]: https://img.shields.io/github/contributors/lna-dev/README-TEMPLATE.svg?style=for-the-badge
-[contributors-url]: https://github.com/lna-dev/README-TEMPLATE/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lna-dev/README-TEMPLATE.svg?style=for-the-badge
-[forks-url]: https://github.com/lna-dev/README-TEMPLATE/network/members
-[stars-shield]: https://img.shields.io/github/stars/lna-dev/README-TEMPLATE.svg?style=for-the-badge
-[stars-url]: https://github.com/lna-dev/README-TEMPLATE/stargazers
-[issues-shield]: https://img.shields.io/github/issues/lna-dev/README-TEMPLATE.svg?style=for-the-badge
-[issues-url]: https://github.com/lna-dev/README-TEMPLATE/issues
-[license-shield]: https://img.shields.io/github/license/lna-dev/README-TEMPLATE.svg?style=for-the-badge
-[license-url]: https://github.com/lna-dev/README-TEMPLATE/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge
+[contributors-url]: https://github.com/Fedodo/Fedodo.BE.Auth/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge
+[forks-url]: https://github.com/Fedodo/Fedodo.BE.Auth/network/members
+[stars-shield]: https://img.shields.io/github/stars/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge
+[stars-url]: https://github.com/Fedodo/Fedodo.BE.Auth/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge
+[issues-url]: https://github.com/Fedodo/Fedodo.BE.Auth/issues
+[license-shield]: https://img.shields.io/github/license/Fedodo/Fedodo.BE.Auth.svg?style=for-the-badge
+[license-url]: https://github.com/Fedodo/Fedodo.BE.Auth/blob/master/LICENSE
