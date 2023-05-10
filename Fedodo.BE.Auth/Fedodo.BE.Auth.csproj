@@ -9,13 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Fedodo.NuGet.Common" Version="0.0.5" />
-        <PackageReference Include="LNA-DEV.CommonExtensions" Version="1.2.11" />
-        <PackageReference Include="OpenIddict" Version="4.1.0" />
-        <PackageReference Include="OpenIddict.MongoDb" Version="4.1.0" />
-        <PackageReference Include="OpenIddict.Server" Version="4.1.0" />
-        <PackageReference Include="OpenIddict.Server.AspNetCore" Version="4.1.0" />
-        <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="4.1.0" />
+        <PackageReference Include="Fedodo.NuGet.Common" Version="1.0.13" />
+        <PackageReference Include="LNA-DEV.CommonExtensions" Version="1.2.13" />
+        <PackageReference Include="OpenIddict" Version="4.3.0" />
+        <PackageReference Include="OpenIddict.MongoDb" Version="4.3.0" />
+        <PackageReference Include="OpenIddict.Server" Version="4.3.0" />
+        <PackageReference Include="OpenIddict.Server.AspNetCore" Version="4.3.0" />
+        <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="4.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     </ItemGroup>
 
