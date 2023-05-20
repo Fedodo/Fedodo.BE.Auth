@@ -17,10 +17,12 @@ namespace Fedodo.BE.Auth.Controllers;
 public class AuthorizationController : Controller
 {
     private readonly IUserHandler _userHandler;
+    private readonly ILogger<AuthorizationController> _logger;
 
-    public AuthorizationController(IUserHandler userHandler)
+    public AuthorizationController(IUserHandler userHandler, ILogger<AuthorizationController> logger)
     {
         _userHandler = userHandler;
+        _logger = logger;
     }
 
     [HttpPost("token")]
@@ -71,6 +73,8 @@ public class AuthorizationController : Controller
         }
         else if (request.IsRefreshTokenGrantType())
         {
+            _logger.LogDebug("Entered RefreshToken handling");
+            
             // Retrieve the claims principal stored in the refresh token.
             var claimsPrincipal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal;
 
