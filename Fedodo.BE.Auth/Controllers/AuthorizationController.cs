@@ -68,8 +68,11 @@ public class AuthorizationController : Controller
 
             identity.SetDestinations(GetDestinations);
 
+            var principal = new ClaimsPrincipal(identity);
+            principal.SetScopes(Scopes.OfflineAccess);
+
             // Returning a SignInResult will ask OpenIddict to issue the appropriate access/identity tokens.
-            return SignIn(new ClaimsPrincipal(identity), OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+            return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
         else if (request.IsRefreshTokenGrantType())
         {
