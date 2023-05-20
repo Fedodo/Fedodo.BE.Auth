@@ -17,10 +17,12 @@ namespace Fedodo.BE.Auth.Controllers;
 public class AuthorizationController : Controller
 {
     private readonly IUserHandler _userHandler;
+    private readonly ILogger<AuthorizationController> _logger;
 
-    public AuthorizationController(IUserHandler userHandler)
+    public AuthorizationController(IUserHandler userHandler, ILogger<AuthorizationController> logger)
     {
         _userHandler = userHandler;
+        _logger = logger;
     }
 
     [HttpPost("token")]
@@ -31,7 +33,7 @@ public class AuthorizationController : Controller
         var request = HttpContext.GetOpenIddictServerRequest() ??
                       throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
 
-        if (request.IsAuthorizationCodeGrantType() || request.IsRefreshTokenGrantType())
+        if (request.IsAuthorizationCodeGrantType())
         {
             // Retrieve the claims principal stored in the authorization code/refresh token.
             var result = await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
@@ -66,8 +68,25 @@ public class AuthorizationController : Controller
 
             identity.SetDestinations(GetDestinations);
 
+            var principal = new ClaimsPrincipal(identity);
+            principal.SetScopes(Scopes.OfflineAccess);
+
             // Returning a SignInResult will ask OpenIddict to issue the appropriate access/identity tokens.
-            return SignIn(new ClaimsPrincipal(identity), OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+            return SignIn(principal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
+        }
+        else if (request.IsRefreshTokenGrantType())
+        {
+            _logger.LogDebug("Entered RefreshToken handling");
+            
+            // Retrieve the claims principal stored in the refresh token.
+            var claimsPrincipal = (await HttpContext.AuthenticateAsync(OpenIddictServerAspNetCoreDefaults.AuthenticationScheme)).Principal;
+
+            if (claimsPrincipal.IsNull())
+            {
+                return BadRequest($"{nameof(claimsPrincipal)} was null");
+            }
+
+            return SignIn(claimsPrincipal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
 
         throw new InvalidOperationException("The specified grant type is not supported.");
