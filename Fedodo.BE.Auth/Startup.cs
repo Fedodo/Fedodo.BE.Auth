@@ -53,7 +53,8 @@ public class Startup
                 options.SetAuthorizationEndpointUris("oauth/authorize");
 
                 options.AllowAuthorizationCodeFlow()
-                    .AllowRefreshTokenFlow();
+                    .AllowRefreshTokenFlow()
+                    .SetRefreshTokenLifetime(TimeSpan.FromDays(90));
             })
             // Register the OpenIddict validation components.
             .AddValidation(options =>
