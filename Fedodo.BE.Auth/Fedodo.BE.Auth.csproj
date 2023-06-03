@@ -9,7 +9,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Fedodo.NuGet.Common" Version="1.0.15" />
+        <PackageReference Include="Fedodo.ActivityPub.Model" Version="2.0.27" />
+        <PackageReference Include="Fedodo.NuGet.Common" Version="1.0.16" />
         <PackageReference Include="LNA-DEV.CommonExtensions" Version="1.2.13" />
         <PackageReference Include="OpenIddict" Version="4.3.0" />
         <PackageReference Include="OpenIddict.MongoDb" Version="4.3.0" />
