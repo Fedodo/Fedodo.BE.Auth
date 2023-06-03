@@ -16,15 +16,10 @@ namespace Fedodo.BE.Auth;
 
 public class Startup
 {
-    public void AddOpenIdDict(WebApplicationBuilder webApplicationBuilder, MongoClient mongoClient1)
+    public void AddOpenIdDict(WebApplicationBuilder webApplicationBuilder, MongoClient mongoClient)
     {
         webApplicationBuilder.Services.AddOpenIddict()
-            .AddCore(options =>
-            {
-                // Note: to use a remote server, call the MongoClient constructor overload
-                // that accepts a connection string or an instance of MongoClientSettings.
-                options.UseMongoDb().UseDatabase(mongoClient1.GetDatabase("OpenIdDict"));
-            })
+            .AddCore(options => { options.UseMongoDb().UseDatabase(mongoClient.GetDatabase("OpenIdDict")); })
             .AddServer(options =>
             {
                 var encryptionCert = RSA.Create();
@@ -35,9 +30,10 @@ public class Startup
                 options.AddEncryptionKey(new RsaSecurityKey(encryptionCert));
                 options.AddSigningKey(new RsaSecurityKey(signingCert));
 
-                options.DisableAccessTokenEncryption(); // This should be reconsidered after a while
-                
-                options.UseAspNetCore().DisableTransportSecurityRequirement();
+                options.DisableAccessTokenEncryption();
+
+                options.UseAspNetCore()
+                    .DisableTransportSecurityRequirement(); // This is not needed because the communication is secured at the ingress in K8s.
 
                 options.UseAspNetCore()
                     .EnableAuthorizationEndpointPassthrough()
@@ -45,9 +41,16 @@ public class Startup
                     .EnableStatusCodePagesIntegration()
                     .EnableTokenEndpointPassthrough();
 
-                // Mark the "email", "profile" and "roles" scopes as supported scopes.
-                options.RegisterScopes(OpenIddictConstants.Scopes.Email, OpenIddictConstants.Scopes.Profile,
-                    OpenIddictConstants.Scopes.Roles, OpenIddictConstants.Scopes.OfflineAccess, "read", "write", "follow");
+                // Mark the scopes as supported
+                options.RegisterScopes(
+                    OpenIddictConstants.Scopes.Email,
+                    OpenIddictConstants.Scopes.Profile,
+                    OpenIddictConstants.Scopes.Roles,
+                    OpenIddictConstants.Scopes.OfflineAccess,
+                    "read",
+                    "write",
+                    "follow"
+                );
 
                 options.SetTokenEndpointUris("oauth/token");
                 options.SetAuthorizationEndpointUris("oauth/authorize");
@@ -56,13 +59,9 @@ public class Startup
                     .AllowRefreshTokenFlow()
                     .SetRefreshTokenLifetime(TimeSpan.FromDays(90));
             })
-            // Register the OpenIddict validation components.
             .AddValidation(options =>
             {
-                // Import the configuration from the local OpenIddict server instance.
                 options.UseLocalServer();
-
-                // Register the ASP.NET Core host.
                 options.UseAspNetCore();
             });
     }
