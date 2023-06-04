@@ -33,8 +33,9 @@ public class UserController : ControllerBase
     public async Task<ActionResult<Person>> CreateUserAsync(CreateActorDto actorDto)
     {
         var rsa = RSA.Create();
+        var actorId = Guid.NewGuid();
 
-        var actor = await CreatePerson(actorDto, rsa);
+        var actor = await CreatePerson(actorDto, rsa, actorId);
 
         if (actor.IsNull())
         {
@@ -70,7 +71,7 @@ public class UserController : ControllerBase
         user.PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem();
         user.ActorIds = new[]
         {
-            actor.Id!.ToString()
+            actorId.ToString()
         };
 
         await _repository.Create(user, DatabaseLocations.Users.Database, DatabaseLocations.Users.Collection);
@@ -78,9 +79,8 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    private async Task<Person?> CreatePerson(CreateActorDto actorDto, RSA rsa)
+    private async Task<Person?> CreatePerson(CreateActorDto actorDto, RSA rsa, Guid actorId)
     {
-        var actorId = Guid.NewGuid();
         var domainName = Environment.GetEnvironmentVariable("DOMAINNAME");
 
         var actor = new Person()
