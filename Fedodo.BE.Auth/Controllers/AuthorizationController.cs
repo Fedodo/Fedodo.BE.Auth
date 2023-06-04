@@ -64,7 +64,8 @@ public class AuthorizationController : Controller
             // changed since the authorization code/refresh token was issued.
             identity.SetClaim(Claims.Subject, user.Id.ToString())
                 .SetClaim(Claims.Email, "user Mail")
-                .SetClaim(Claims.Name, user.UserName);
+                .SetClaim(Claims.Name, user.UserName)
+                .SetClaim("actorIds", user.Id.ToString());
 
             identity.SetDestinations(GetDestinations);
 
