@@ -65,7 +65,7 @@ public class AuthorizationController : Controller
             identity.SetClaim(Claims.Subject, user.Id.ToString())
                 .SetClaim(Claims.Email, "user Mail")
                 .SetClaim(Claims.Name, user.UserName)
-                .SetClaim("actorIds", user.Id.ToString());
+                .SetClaim("actorIds", user.ActorIds?.SplitToString(";"));
 
             identity.SetDestinations(GetDestinations);
 
