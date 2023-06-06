@@ -45,7 +45,8 @@ public class UserController : ControllerBase
         // Create ActorSecrets
         var actorSecrets = new ActorSecrets()
         {
-            PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem()
+            PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem(),
+            ActorId = actor.Id!
         };
         
         await _repository.Create(actorSecrets, DatabaseLocations.ActorSecrets.Database,
