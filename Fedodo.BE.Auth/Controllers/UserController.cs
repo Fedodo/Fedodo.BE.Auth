@@ -41,6 +41,15 @@ public class UserController : ControllerBase
         {
             return BadRequest("Actor could not be created");
         }
+        
+        // Create ActorSecrets
+        var actorSecrets = new ActorSecrets()
+        {
+            PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem()
+        };
+        
+        await _repository.Create(actorSecrets, DatabaseLocations.ActorSecrets.Database,
+            DatabaseLocations.ActorSecrets.Collection);
 
         // Create Webfinger
         var webfinger = new Webfinger
@@ -68,7 +77,6 @@ public class UserController : ControllerBase
         user.PasswordSalt = passwordSalt;
         user.UserName = actorDto.PreferredUsername;
         user.Role = "User";
-        user.PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem();
         user.ActorIds = new[]
         {
             actorId.ToString()
