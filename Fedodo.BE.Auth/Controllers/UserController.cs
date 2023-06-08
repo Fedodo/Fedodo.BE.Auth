@@ -68,7 +68,7 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    [HttpGet]
+    [HttpGet("Actors")]
     [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     public async Task<ActionResult<IEnumerable<Uri>>> GetAllActors(Guid userId)
     {
@@ -79,7 +79,7 @@ public class UserController : ControllerBase
         return Ok(user.ActorIds);
     }    
     
-    [HttpPost]
+    [HttpPost("Actors")]
     [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
     public async Task<ActionResult<IEnumerable<Uri>>> CreateActor(Guid userId, CreateActorDto actorDto)
     {
