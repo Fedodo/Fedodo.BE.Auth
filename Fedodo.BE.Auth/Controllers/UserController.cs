@@ -81,7 +81,7 @@ public class UserController : ControllerBase
     
     [HttpPost("Actors")]
     [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
-    public async Task<ActionResult<IEnumerable<Uri>>> CreateActor(Guid userId, CreateActorDto actorDto)
+    public async Task<ActionResult<IEnumerable<Uri>>> CreateActor(Guid userId, [FromBody]CreateActorDto actorDto)
     {
         if (!_userHandler.VerifyUserId(userId, HttpContext)) return Forbid();
         
