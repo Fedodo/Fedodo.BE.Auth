@@ -8,8 +8,10 @@ using Fedodo.NuGet.Common.Constants;
 using Fedodo.NuGet.Common.Interfaces;
 using Fedodo.NuGet.Common.Models;
 using Fedodo.NuGet.Common.Models.Webfinger;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using OpenIddict.Validation.AspNetCore;
 
 namespace Fedodo.BE.Auth.Controllers;
 
@@ -18,65 +20,43 @@ namespace Fedodo.BE.Auth.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IAuthenticationHandler _authenticationHandler;
+    private readonly IUserHandler _userHandler;
     private readonly ILogger<UserController> _logger;
     private readonly IMongoDbRepository _repository;
 
     public UserController(ILogger<UserController> logger, IMongoDbRepository repository,
-        IAuthenticationHandler authenticationHandler)
+        IAuthenticationHandler authenticationHandler, IUserHandler userHandler)
     {
         _logger = logger;
         _repository = repository;
         _authenticationHandler = authenticationHandler;
+        _userHandler = userHandler;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Person>> CreateUserAsync(CreateActorDto actorDto)
+    public async Task<ActionResult<Person>> CreateUserAsync(CreateUserDto userDto)
     {
         var rsa = RSA.Create();
         var actorId = Guid.NewGuid();
 
-        var actor = await CreatePerson(actorDto, rsa, actorId);
+        var actor = await CreatePerson(userDto, rsa, actorId);
 
         if (actor.IsNull())
         {
             return BadRequest("Actor could not be created");
         }
         
-        // Create ActorSecrets
-        var actorSecrets = new ActorSecrets()
-        {
-            PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem(),
-            ActorId = actor.Id!
-        };
-        
-        await _repository.Create(actorSecrets, DatabaseLocations.ActorSecrets.Database,
-            DatabaseLocations.ActorSecrets.Collection);
+        await CreateActorSecrets(rsa, actor);
 
-        // Create Webfinger
-        var webfinger = new Webfinger
-        {
-            Subject = $"acct:{actor.PreferredUsername}@{Environment.GetEnvironmentVariable("DOMAINNAME")}",
-            Links = new List<WebLink>
-            {
-                new()
-                {
-                    Rel = "self",
-                    Href = actor.Id,
-                    Type = "application/activity+json"
-                }
-            }
-        };
-
-        await _repository.Create(webfinger, DatabaseLocations.Webfinger.Database,
-            DatabaseLocations.Webfinger.Collection);
+        await CreateWebfinger(actor);
 
         // Create User
         User user = new();
-        _authenticationHandler.CreatePasswordHash(actorDto.Password, out var passwordHash, out var passwordSalt);
+        _authenticationHandler.CreatePasswordHash(userDto.Password, out var passwordHash, out var passwordSalt);
         user.Id = Guid.NewGuid();
         user.PasswordHash = passwordHash;
         user.PasswordSalt = passwordSalt;
-        user.UserName = actorDto.PreferredUsername;
+        user.UserName = userDto.PreferredUsername;
         user.Role = "User";
         user.ActorIds = new[]
         {
@@ -88,16 +68,50 @@ public class UserController : ControllerBase
         return Ok();
     }
 
-    private async Task<Person?> CreatePerson(CreateActorDto actorDto, RSA rsa, Guid actorId)
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public async Task<ActionResult<IEnumerable<Uri>>> GetAllActors(Guid userId)
+    {
+        if (!_userHandler.VerifyUserId(userId, HttpContext)) return Forbid();
+
+        var user = await _userHandler.GetUserByIdAsync(userId);
+        
+        return Ok(user.ActorIds);
+    }    
+    
+    [HttpPost]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public async Task<ActionResult<IEnumerable<Uri>>> CreateActor(Guid userId, CreateActorDto actorDto)
+    {
+        if (!_userHandler.VerifyUserId(userId, HttpContext)) return Forbid();
+        
+        var rsa = RSA.Create();
+        var actorId = Guid.NewGuid();
+        
+        var actor = await CreatePerson(actorDto, rsa, actorId);
+
+        if (actor.IsNull())
+        {
+            return BadRequest("Actor could not be created");
+        }
+        
+        await CreateActorSecrets(rsa, actor);
+
+        await CreateWebfinger(actor);
+
+        return Ok();
+    }
+    
+    private async Task<Person?> CreatePerson(CreateActorDto userDto, RSA rsa, Guid actorId)
     {
         var domainName = Environment.GetEnvironmentVariable("DOMAINNAME");
 
         var actor = new Person()
         {
             // Client generated
-            Summary = actorDto.Summary,
-            PreferredUsername = actorDto.PreferredUsername,
-            Name = actorDto.Name,
+            Summary = userDto.Summary,
+            PreferredUsername = userDto.PreferredUsername,
+            Name = userDto.Name,
 
             // Server generated
             Id = new Uri($"https://{domainName}/actor/{actorId}"),
@@ -149,5 +163,37 @@ public class UserController : ControllerBase
         }
 
         return actor;
+    }
+    
+    private async Task CreateWebfinger(Person actor)
+    {
+        var webfinger = new Webfinger
+        {
+            Subject = $"acct:{actor.PreferredUsername}@{Environment.GetEnvironmentVariable("DOMAINNAME")}",
+            Links = new List<WebLink>
+            {
+                new()
+                {
+                    Rel = "self",
+                    Href = actor.Id,
+                    Type = "application/activity+json"
+                }
+            }
+        };
+
+        await _repository.Create(webfinger, DatabaseLocations.Webfinger.Database,
+            DatabaseLocations.Webfinger.Collection);
+    }
+
+    private async Task CreateActorSecrets(RSA rsa, Person actor)
+    {
+        var actorSecrets = new ActorSecrets()
+        {
+            PrivateKeyActivityPub = rsa.ExtractRsaPrivateKeyPem(),
+            ActorId = actor.Id!
+        };
+
+        await _repository.Create(actorSecrets, DatabaseLocations.ActorSecrets.Database,
+            DatabaseLocations.ActorSecrets.Collection);
     }
 }

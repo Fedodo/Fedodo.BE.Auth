@@ -12,5 +12,4 @@ public class CreateActorDto
 
     public string? Summary { get; set; }
 
-    [Required] public string? Password { get; set; }
 }
