@@ -8,8 +8,10 @@ using Fedodo.NuGet.Common.Constants;
 using Fedodo.NuGet.Common.Interfaces;
 using Fedodo.NuGet.Common.Models;
 using Fedodo.NuGet.Common.Models.Webfinger;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using OpenIddict.Validation.AspNetCore;
 
 namespace Fedodo.BE.Auth.Controllers;
 
@@ -88,6 +90,13 @@ public class UserController : ControllerBase
         return Ok();
     }
 
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+    public ActionResult test()
+    {
+        return Ok();
+    }
+    
     private async Task<Person?> CreatePerson(CreateActorDto actorDto, RSA rsa, Guid actorId)
     {
         var domainName = Environment.GetEnvironmentVariable("DOMAINNAME");
