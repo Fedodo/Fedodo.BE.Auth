@@ -99,6 +99,14 @@ public class UserController : ControllerBase
 
         await CreateWebfinger(actor);
 
+        var user = await _userHandler.GetUserByIdAsync(userId);
+
+        var temp = user.ActorIds!.ToList();
+        temp.Add(actorId.ToString());
+        user.ActorIds = temp;
+
+        await _userHandler.UpdateUserAsync(user);
+
         return Ok();
     }
     
